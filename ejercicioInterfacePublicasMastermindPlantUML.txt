@@ -1,0 +1,89 @@
+@startuml
+class Mastermind {
+- board : Board
++ play() : void
++ main() : void
+- isResumed()
+}
+
+
+
+class IO{
+}
+
+
+
+class Board{
+- resultList : List<Result>
+- secret : Secret
+- counResults : int
+- {static} ATTEMPTS : int
++ play() : void
++ showAllResults() :void
+}
+
+
+
+class Secret{
++ getRandom() : Combination
++ showAsterisks() : void
+}
+
+
+
+class ProposedCombination{
+- userInput : String
+- PATTERN : Pattern
+- checkIntegrity() : boolean
+- isCorrectLength() : boolean
+- isCharColors() : boolean
+- isUniqueChars() : boolean
+}
+
+
+
+class Combination{
+- colorList : ArrayList<Color>
+# show() : void
+# size() : int
+}
+
+
+
+class Result
+{
+- proposedCombination : ProposedCombination
+- secret : Secret
+- piecesBlack : int
+- piecesWhite : int
++ Result(ProposedCombination proposedCombination)
++ showResult() : void
++ numberOfBlackPieces() : int
+}
+
+
+
+Enum Color{
+RED
+BLUE
+YELLOW
+ORANGE
+PINK
+GREEN
++ getKeyword() : int
++ {static} valueOf() : Color
+}
+
+
+Mastermind *-down-> Board
+Board *-down-> "0 . 10" Result
+Board *-down-> Secret
+Board ..> IO
+Board o--> ProposedCombination
+Secret -up-^ Combination
+Secret -down-> Result
+ProposedCombination -up-^ Combination
+ProposedCombination ..> IO
+ProposedCombination --> Result
+Combination -down-> Color
+@enduml
